@@ -1,12 +1,8 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: libbmi088
-Source: https://github.com/turmary/bmi088-python
+Upstream-Name: stm32mp1-bootcfg
+Source: https://gitee.com/turmary/stm32mp1-bootcfg
 
-Files:     src/main.c
-           src/rpi_bmi088.c
-           src/rpi_bmi088.h
-           Makefile
-           README.md
+Files:     root/
 Copyright: 2018 Peter Yang <turmary@126.com>
 License:   MIT
 

@@ -16,61 +16,34 @@ RM = rm -f
 srcdir := $(dir $(firstword ${MAKEFILE_LIST}))
 srcdir := $(shell cd ${srcdir}; pwd)
 
-OBJS_BMI088 = bmi088.o bmi08a.o bmi08g.o rpi_bmi088.o rpi_i2c.o
-OBJS_AKICM = rpi_icm20600.o rpi_ak09918.o rpi_i2c.o
+TGT_BOOTSCR   = boot.scr.uimg
 
-TST_BMI088   = test_bmi088
-TST_ICM20600 = test_icm20600
-TST_AK09918  = test_ak09918
-
-LIB_BMI088   = libbmi088.so
-LIB_AKICM    = libakicm.so
-
-TARGETS = $(TST_BMI088) $(TST_ICM20600) $(TST_AK09918)
-LIBS    = $(LIB_BMI088) $(LIB_AKICM)
+TARGETS = $(TGT_BOOTSCR)
 
 
 # $(warning srcdir=$(srcdir))
-VPATH = $(srcdir)/src:$(srcdir)/bosch-lib
-
-CPPFLAGS   = -I. -I$(srcdir)/src -I$(srcdir)/bosch-lib -DBMI08X_ENABLE_BMI085=0 -DBMI08X_ENABLE_BMI088=1
-CFLAGS     = -g
-ALL_CFLAGS = $(CPPFLAGS) $(CFLAGS)
+VPATH = $(srcdir)/src
 
 all: $(TARGETS) $(LIBS)
 
-# option -Wl,--rpath=./ used by bmi088_test under developing environment
-$(TST_BMI088): test_bmi088.o $(LIB_BMI088)
-	$(CC)  $(ALL_CFLAGS) -o $@ -L./ -Wl,-\( -lbmi088 -Wl,--rpath=./ $< -Wl,-\)
-
-$(TST_ICM20600): test_icm20600.o $(LIB_AKICM)
-	$(CC)  $(ALL_CFLAGS) -o $@ -L./ -Wl,-\( -lakicm -Wl,--rpath=./ $< -Wl,-\)
-
-$(TST_AK09918): test_ak09918.o $(LIB_AKICM)
-	$(CC)  $(ALL_CFLAGS) -o $@ -L./ -Wl,-\( -lakicm -Wl,--rpath=./ $< -Wl,-\)
-
-$(LIB_BMI088): $(OBJS_BMI088)
-	$(CC)  $(ALL_CFLAGS) --shared -o $@ $^
-
-$(LIB_AKICM): $(OBJS_AKICM)
-	$(CC)  $(ALL_CFLAGS) --shared -o $@ $^
+$(TGT_BOOTSCR): boot.cmd
+	mkimage -C none -A arm -T script -d $< $@
+	#
+	# # the reverse:
+	# dumpimage -i root/boot/boot.scr.uimg -T script -p 0 boot.scr.data
+	# # Remove data-header
+	# dd if=boot.scr.data of=boot.cmd bs=8 skip=1
 
 install: all
-	$(INSTALL) -D $(TST_BMI088) $(DESTDIR)$(prefix)/bin/$(TST_BMI088)
-	$(INSTALL) -D $(TST_ICM20600) $(DESTDIR)$(prefix)/bin/$(TST_ICM20600)
-	$(INSTALL) -D $(TST_AK09918) $(DESTDIR)$(prefix)/bin/$(TST_AK09918)
-	$(INSTALL) -D $(LIB_BMI088) $(DESTDIR)$(prefix)/lib/$(LIB_BMI088)
-	$(INSTALL) -D $(LIB_AKICM) $(DESTDIR)$(prefix)/lib/$(LIB_AKICM)
+	# $(INSTALL) -d $(DESTDIR)/boot/
+	cp -rf boot $(DESTDIR)/
+	$(INSTALL) -D $(TGT_BOOTSCR) $(DESTDIR)/boot/
 
 uninstall:
-	-$(RM) $(DESTDIR)$(prefix)/bin/$(TST_BMI088)
-	-$(RM) $(DESTDIR)$(prefix)/bin/$(TST_AK09918)
-	-$(RM) $(DESTDIR)$(prefix)/bin/$(TST_ICM20600)
-	-$(RM) $(DESTDIR)$(prefix)/lib/$(LIB_BMI088)
-	-$(RM) $(DESTDIR)$(prefix)/lib/$(LIB_AKICM)
+	-$(RM) $(DESTDIR)/boot/$(TGT_BOOTSCR)
 
 clean:
-	-$(RM) *.o $(TARGETS) $(LIBS)
+	-$(RM) *.o $(TARGETS)
 
 .PHONY: all clean install uninstall
 

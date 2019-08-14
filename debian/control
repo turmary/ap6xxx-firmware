@@ -1,15 +1,14 @@
-Source: libbmi088
+Source: stm32mp1-bootcfg
 Section: base
 Priority: optional
 Maintainer: Peter Yang <turmary@126.com>
 Build-Depends: debhelper (>=9)
 Standards-Version: 3.9.6
-Homepage: https://github.com/turmary/bmi088-python
+Homepage: https://gitee.com/turmary/stm32mp1-bootcfg
 
-Package: libbmi088
+Package: stm32mp1-bootcfg
 Architecture: armhf arm64
 Depends: ${misc:Depends}, ${shlibs:Depends}
-Description: Raspberry Pi BMI088 Library
- BMI088 6-Axis Accelerometer & Gyroscope Control Library
- for the Raspberry Pi.
+Description: STM32MP1 bootloader configuration
+ device tree version, splash, and so on.
 
