@@ -20,7 +20,7 @@ trap 'echo "error:$0($LINENO) \"$BASH_COMMAND\" \"$@\""' ERR
 SCRIPT_DIR=$(cd $(dirname $0); pwd)
 ROOT_DIR=$(cd ${SCRIPT_DIR}/..; pwd)
 
-APP_NAME=stm32mp1-bootcfg
+APP_NAME=ap6xxx-firmware
 VERSION=0.0.1
 DEB_OBJECT_DIR=${ROOT_DIR}/deobj
 DEB_OVERWRITE=${ROOT_DIR}

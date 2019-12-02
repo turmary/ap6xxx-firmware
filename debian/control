@@ -1,12 +1,12 @@
-Source: stm32mp1-bootcfg
-Section: base
+Source: ap6xxx-firmware
+Section: database
 Priority: optional
 Maintainer: Peter Yang <turmary@126.com>
 Build-Depends: debhelper (>=9)
 Standards-Version: 3.9.6
-Homepage: https://gitee.com/turmary/stm32mp1-bootcfg
+Homepage: https://gitee.com/turmary/stm32mp1-bootcfg/tree/ap6xxx-fw
 
-Package: stm32mp1-bootcfg
+Package: ap6xxx-firmware
 Architecture: armhf arm64
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: STM32MP1 bootloader configuration
