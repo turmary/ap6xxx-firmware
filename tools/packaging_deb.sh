@@ -45,7 +45,7 @@ echo "########################################################################"
 cp -r ${ROOT_DIR}/src ${PACKAGE_DIR_NAME}/
 cp ${ROOT_DIR}/Makefile ${PACKAGE_DIR_NAME}/
 cp ${ROOT_DIR}/LICENSE ${PACKAGE_DIR_NAME}/
-cp -r ${ROOT_DIR}/root/* ${PACKAGE_DIR_NAME}/
+cp -r ${ROOT_DIR}/root ${PACKAGE_DIR_NAME}/
 tar -zcvf ${PACKAGE_DIR_NAME}.tar.gz ${PACKAGE_DIR_NAME}/
 
 # generate default debian setting file and overwrite

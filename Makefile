@@ -24,10 +24,12 @@ TARGETS = $(TGT_BOOTSCR)
 # $(warning srcdir=$(srcdir))
 VPATH = $(srcdir)/src
 
-all: $(TARGETS) $(LIBS)
+all: # $(TARGETS) $(LIBS)
 
-$(TGT_BOOTSCR): boot.cmd
-	mkimage -C none -A arm -T script -d $< $@
+$(TGT_BOOTSCR):
+	# nothing
+	#
+	# mkimage -C none -A arm -T script -d $< $@
 	#
 	# # the reverse:
 	# dumpimage -i root/boot/boot.scr.uimg -T script -p 0 boot.scr.data
@@ -36,11 +38,13 @@ $(TGT_BOOTSCR): boot.cmd
 
 install: all
 	# $(INSTALL) -d $(DESTDIR)/boot/
-	cp -rf boot $(DESTDIR)/
-	$(INSTALL) -D $(TGT_BOOTSCR) $(DESTDIR)/boot/
+	# cp -rf boot $(DESTDIR)/
+	# $(INSTALL) -D $(TGT_BOOTSCR) $(DESTDIR)/boot/
+	cp -rf root/* $(DESTDIR)/
 
 uninstall:
-	-$(RM) $(DESTDIR)/boot/$(TGT_BOOTSCR)
+	# -$(RM) $(DESTDIR)/boot/$(TGT_BOOTSCR)
+	-$(RM) $(DESTDIR)/lib/firmware/brcm/*.hcd
 
 clean:
 	-$(RM) *.o $(TARGETS)
