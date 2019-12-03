@@ -24,7 +24,7 @@ fi
 
 case "$1" in
 
-  remove)
+  remove|purge|upgrade)
     ldconfig
   ;;
 
