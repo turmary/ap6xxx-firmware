@@ -1,4 +1,5 @@
 PM=0
-nv_by_chip=2 \
+nv_by_chip=3 \
 43430 0 nvram_ap6212.txt \
+43430 1 nvram_ap6236a1.txt \
 43430 2 nvram_ap6236.txt
